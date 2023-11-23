@@ -1,59 +1,49 @@
 import tkinter as tk
 from tkinter import messagebox
-from sqrEq import sqrEquation
+from keygen import keyGeneration
 
 
 def close():
     window.destroy()
 
 
-def calc():
-    A = float(arg_A.get())
-    B = float(arg_B.get())
-    C = float(arg_C.get())
-    if A == 0.0:
-        tk.messagebox.showwarning('Error', 'Division by zero!')
+def generate():
+    number=argument.get()
+    if number[0] == '0':
+        tk.messagebox.showwarning('Error', 'A number cannot start from zero!')
+    elif len(number)!=6:
+        tk.messagebox.showwarning('Error', 'A number must be SIX-DIGIT!')
     else:
-        lbl_result.configure(text=sqrEquation(A, B, C))
+        lbl_result.configure(text=keyGeneration(number))
 
 
 window = tk.Tk()
-window.geometry('576x360')
-bg_img = tk.PhotoImage(file='bg_pic.png')
+window.geometry('576x384')
+bg_img = tk.PhotoImage(file='forzapic1.png')
 
 lbl_bg = tk.Label(window, image=bg_img)
 lbl_bg.place(x=0, y=0, relwidth=1, relheight=1)
 
-frame = tk.Frame(window)
-frame.place(relx=0.5, rely=0.5, anchor='center')
+frame1 = tk.Frame(window)
+frame1.place(relx=0.5, rely=0.33, anchor='s')
 
-lbl_A = tk.Label(frame, text='A', font=('Arial', 30), bg='blue', fg='white')
-lbl_A.grid(column=0, row=0, padx=10, pady=15)
-arg_A = tk.Entry(frame, width=10)
-arg_A.insert(0, '1')
-arg_A.grid(column=0, row=1, padx=10, pady=15)
+lbl_input = tk.Label(frame1, text='Enter a six-digit number:')
+lbl_input.grid(column=1,row=0, padx=10, pady=5)
 
-lbl_B = tk.Label(frame, text='B', font=('Arial', 30))
-lbl_B.grid(column=1, row=0, padx=10, pady=15)
-arg_B = tk.Entry(frame, width=10)
-arg_B.insert(0, '0')
-arg_B.grid(column=1, row=1, padx=10, pady=15)
+argument = tk.Entry(frame1, width=10,justify='center')
+argument.focus()
+argument.grid(column=1, row=1, padx=10, pady=10)
 
-lbl_C = tk.Label(frame, text='C', font=('Arial', 30))
-lbl_C.grid(column=2, row=0, padx=10, pady=15)
-arg_C = tk.Entry(frame, width=10)
-arg_C.insert(0, '0')
-arg_C.grid(column=2, row=1, padx=10, pady=15)
+btn_gen = tk.Button(frame1, text='Generate', command=generate)
+btn_gen.grid(column=1, row=2, sticky='e', padx=10, pady=10)
+btn_exit = tk.Button(frame1, text='Cancel', command=close)
+btn_exit.grid(column=1, row=2, sticky='w', padx=10, pady=10)
 
-lbl_roots = tk.Label(frame, text='Result:')
-lbl_roots.grid(column=1, row=2)
-lbl_result = tk.Label(frame, text='None yet.', font=('Arial', 10))
+frame2 = tk.Frame(window)
+frame2.place(relx=0.5, rely=0.85, anchor='n')
+
+lbl_key = tk.Label(frame2, text='Your key is:', font=('Arial', 10))
+lbl_key.grid(column=1, row=2)
+lbl_result = tk.Label(frame2, text='None yet.', font=('Arial', 10))
 lbl_result.grid(column=2, row=2)
-
-btn_calc = tk.Button(frame, text='Calculate', command=calc)
-btn_calc.grid(column=0, row=3, padx=10, pady=15)
-btn_exit = tk.Button(frame, text='Cancel', command=close)
-btn_exit.grid(column=2, row=3, padx=10, pady=15)
-
-
 window.mainloop()

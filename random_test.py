@@ -1,6 +1,5 @@
 import random
 
-
 code = ''
 letters_list = 'abcdefghijklmnopqrstuvwxyz'
 for i in range(3):

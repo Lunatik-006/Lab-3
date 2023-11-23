@@ -1,16 +1,34 @@
-def keyGeneration(number):
-    if number == 0:
-        text = f'Division by zero!'
-    else:
-        D = B ** 2 - 4 * A * C
-        if D > 0:
-            x1 = round((D ** 0.5 - B) / (A * 2), 2)
-            x2 = round((B * -1 - D ** 0.5) / (A * 2), 2)
-            text = f'{x1}, {x2}'
-        elif D == 0:
-            x1 = round((B * -1) / (A * 2), 2)
-            text = f'{x1}'
-        else:
-            text = f'No roots!'
+import random
 
-    return text
+
+def get_numbers(code):
+    numbers = []
+
+    for i in code:
+        try:
+            int(i)
+            numbers.append(i)
+        except ValueError:
+            None
+
+    return int("".join(numbers))
+
+
+def keyGeneration(entered_number):
+    letters_list = "abcdefghijklmnopqrstuvwxyz"
+
+    first_set = (
+        entered_number[3:] + random.choice(letters_list) + random.choice(letters_list)
+    )
+    first_part = "".join(random.sample(first_set, 5))
+
+    second_set = (
+        entered_number[:3] + random.choice(letters_list) + random.choice(letters_list)
+    )
+    second_part = "".join(random.sample(second_set, 5))
+
+    sum_of_numbers = get_numbers(first_part) + get_numbers(second_part)
+    third_part = "0" * (4 - len(str(sum_of_numbers))) + str(sum_of_numbers)
+
+    return first_part + "-" + second_part + " " + third_part
+

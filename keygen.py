@@ -31,12 +31,10 @@ def KeyGeneration(number):
     )
 
     sum_of_numbers = GetNumbers(first_part) + GetNumbers(second_part)
-    
+
     # При необходимости дополнить сумму чисел из первых двух частей ключа
     # незначащими нулями, получить 3 часть ключа
     third_part = "0" * (4 - len(str(sum_of_numbers))) + str(sum_of_numbers)
 
     return first_part + "-" + second_part + " " + third_part
 
-
-print(KeyGeneration("123456"))

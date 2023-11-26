@@ -1,7 +1,7 @@
-import random
+from random import sample, choice
 
 
-def get_numbers(code):
+def GetNumbers(code):  # Выделить все числа из строки символов
     numbers = []
 
     for i in code:
@@ -14,21 +14,29 @@ def get_numbers(code):
     return int("".join(numbers))
 
 
-def keyGeneration(entered_number):
+def KeyGeneration(number):
+    split_number = list(number)
     letters_list = "abcdefghijklmnopqrstuvwxyz"
 
-    first_set = (
-        entered_number[3:] + random.choice(letters_list) + random.choice(letters_list)
+    # Получить строку из расположенных в случайном порядке
+    # 3 последних цифр введенного числа и 2 случайных букв
+    first_part = "".join(
+        sample(number[3:] + choice(letters_list) + choice(letters_list), 5)
     )
-    first_part = "".join(random.sample(first_set, 5))
 
-    second_set = (
-        entered_number[:3] + random.choice(letters_list) + random.choice(letters_list)
+    # Получить строку из расположенных в случайном порядке
+    # 3 первых цифр введенного числа и 2 случайных букв
+    second_part = "".join(
+        sample(number[:3] + choice(letters_list) + choice(letters_list), 5)
     )
-    second_part = "".join(random.sample(second_set, 5))
 
-    sum_of_numbers = get_numbers(first_part) + get_numbers(second_part)
+    sum_of_numbers = GetNumbers(first_part) + GetNumbers(second_part)
+    
+    # При необходимости дополнить сумму чисел из первых двух частей ключа
+    # незначащими нулями, получить 3 часть ключа
     third_part = "0" * (4 - len(str(sum_of_numbers))) + str(sum_of_numbers)
 
     return first_part + "-" + second_part + " " + third_part
 
+
+print(KeyGeneration("123456"))
